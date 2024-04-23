@@ -7,7 +7,7 @@ Homebrew Solitaire is a free, open-source, ad-free, highly customizable solitair
 
 Nothing has been tested as of yet, the frontend of the application needs to interface with the backend first.
 Most of the backend code has already been written.
-See Planned Features
+See [Planned Features](https://github.com/SeveringHams/HomebrewSolitaire/edit/master/README.md#planned-features)
 
 
 ## Planned Features
