@@ -1,26 +1,13 @@
 package com.severinghams.homebrewsolitaire;
 
-import static com.severinghams.homebrewsolitaire.R.drawable.background;
-
-import android.content.Context;
-import android.content.ContextParams;
-import android.content.ContextWrapper;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
+import android.annotation.SuppressLint;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
 
-import com.google.androidgamesdk.GameActivity;
-
-import java.util.Objects;
-
-public class MainActivity extends GameActivity {
+public class MainActivity extends AppCompatActivity {
     //public static final int screenHeight;
     //public static final int screenWidth;
     static {
@@ -48,10 +35,12 @@ public class MainActivity extends GameActivity {
         );
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        mSurfaceView.setBackground(AppCompatResources.getDrawable(this,background));
+        this.setContentView(R.layout.game_view);
+
     }
 
     @Override
