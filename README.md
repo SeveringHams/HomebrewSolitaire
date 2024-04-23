@@ -25,5 +25,5 @@ See [Planned Features](https://github.com/SeveringHams/HomebrewSolitaire/blob/ma
 
 ## License
 
-[GNU GPLv3](LICENSE.md)
+This project is licensed under the [GNU General Public License v3](LICENSE.md)
 
