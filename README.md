@@ -23,6 +23,10 @@ See [Planned Features](https://github.com/SeveringHams/HomebrewSolitaire/blob/ma
 - [@SeveringHams](https://www.github.com/SeveringHams)
 
 
+## Attribution
+
+- Undo, Redo, Back, and Hint UI icons created by [Radhe Icon from Flaticon](https://www.flaticon.com/authors/radhe-icon))
+
 ## License
 
 This project is licensed under the [GNU General Public License v3](LICENSE.md)
