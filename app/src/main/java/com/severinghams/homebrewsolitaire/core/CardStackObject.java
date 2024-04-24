@@ -43,6 +43,7 @@ public class CardStackObject {
         this.canStack = canStack;
         this.singleCardOnly = false;
         this.canRemoveFromStack = canRemoveFromStack;
+        updateStack();
     }
     public CardStackObject (int posH, int posV, EnumStackType stackType, boolean canRemoveFromStack) {
         //Position
@@ -60,6 +61,7 @@ public class CardStackObject {
         this.canStack = false;
         this.singleCardOnly = false;
         this.canRemoveFromStack = canRemoveFromStack;
+        updateStack();
     }
     // specify position. use for reserve slots.
     public CardStackObject (int posH, int posV) {
@@ -131,6 +133,7 @@ public class CardStackObject {
     public boolean placeOnTop(ArrayList<CardObject> hand) {
         if (canPlaceOnTop(hand.get(0))) {
             cardStackList.addAll(hand);
+            updateStack();
             return true;
         }
         return false;
@@ -162,16 +165,18 @@ public class CardStackObject {
                 toHand.add(cardStackList.get(stackIndex));
                 cardStackList.remove(stackIndex);
             }
-            if (getTopCard()!=null) {
-                getTopCard().isFaceDown = false;
-            }
+            updateStack();
             return toHand;
         }
         return null;
     }
     public void updateStack() {
-        if (getTopCard()!=null) {
+        if (getTopCard()!=null&&canRemoveFromStack) {
             getTopCard().isFaceDown = false;
+        }
+        for (int i = 0; i < cardStackList.size(); i++) {
+            cardStackList.get(i).verticalPos = i;
+            cardStackList.get(i).horizontalPos = positionH;
         }
     }
     public static void setIgnoreRules(boolean ignoreRule) {

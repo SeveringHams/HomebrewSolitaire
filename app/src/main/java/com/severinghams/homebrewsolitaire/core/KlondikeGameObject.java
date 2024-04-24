@@ -5,6 +5,7 @@ import com.severinghams.homebrewsolitaire.core.enums.EnumStackType;
 import com.severinghams.homebrewsolitaire.core.enums.EnumStackingRank;
 import com.severinghams.homebrewsolitaire.core.enums.EnumStackingSuit;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 public class KlondikeGameObject extends BaseSingleDeckGameObject {
@@ -29,9 +30,23 @@ public class KlondikeGameObject extends BaseSingleDeckGameObject {
                 dealer.remove(0);
             }
         }
+        dealer.trimToSize();
         for (int i = 0; i < dealer.size(); i++) {
             stock.setupAddCard(dealer.get(0));
             dealer.remove(0);
         }
+        dealer.trimToSize();
+    }
+
+    public ArrayList<CardObject> getRenderFoundation() {
+        ArrayList<CardObject> toView = new ArrayList<CardObject>(1);
+        ArrayList<CardObject> temp = new ArrayList<CardObject>(1);
+        for (int i = 0; i < foundation.length; i++) {
+            temp = foundation[i].getCardStackList();
+            for (int j = 0; j < temp.size(); j++) {
+                toView.add(temp.get(j));
+            }
+        }
+        return toView;
     }
 }

@@ -7,13 +7,15 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.severinghams.homebrewsolitaire.core.BaseSingleDeckGameObject;
+import com.severinghams.homebrewsolitaire.core.KlondikeGameObject;
+
 public class MainActivity extends AppCompatActivity {
     //public static final int screenHeight;
     //public static final int screenWidth;
     static {
         System.loadLibrary("homebrewsolitaire");
     }
-
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);

@@ -8,9 +8,11 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.severinghams.homebrewsolitaire.R;
+import com.severinghams.homebrewsolitaire.core.KlondikeGameObject;
 
 /**
  * TODO: document your custom view class.
@@ -25,18 +27,31 @@ public class GameBoard extends View {
     private float mTextWidth;
     private float mTextHeight;
 
+    int paddingLeft = getPaddingLeft();
+    int paddingTop = getPaddingTop();
+    int paddingRight = getPaddingRight();
+    int paddingBottom = getPaddingBottom();
+
+    int contentWidth = getWidth() - paddingLeft - paddingRight;
+    int contentHeight = getHeight() - paddingTop - paddingBottom;
+
+    public KlondikeGameObject gameObject;
+
     public GameBoard(Context context) {
         super(context);
+        this.gameObject = new KlondikeGameObject(0);
         init(null, 0);
     }
 
     public GameBoard(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.gameObject = new KlondikeGameObject(0);
         init(attrs, 0);
     }
 
     public GameBoard(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        this.gameObject = new KlondikeGameObject(0);
         init(attrs, defStyle);
     }
 
@@ -45,24 +60,24 @@ public class GameBoard extends View {
         final TypedArray a = getContext().obtainStyledAttributes(
                 attrs, R.styleable.GameBoard, defStyle, 0);
 
-       // mExampleString = a.getString(
-        //        R.styleable.GameBoard_exampleString);
-       // mExampleColor = a.getColor(
-       //         R.styleable.GameBoard_exampleColor,
-        //        mExampleColor);
+        mExampleString = a.getString(
+                R.styleable.GameBoard_exampleString);
+        mExampleColor = a.getColor(
+                R.styleable.GameBoard_exampleColor,
+                mExampleColor);
         // Use getDimensionPixelSize or getDimensionPixelOffset when dealing with
         // values that should fall on pixel boundaries.
-        //mExampleDimension = a.getDimension(
-        //        R.styleable.GameBoard_exampleDimension,
-        //        mExampleDimension);
+        mExampleDimension = a.getDimension(
+                R.styleable.GameBoard_exampleDimension,
+                mExampleDimension);
 
-        //if (a.hasValue(R.styleable.GameBoard_exampleDrawable)) {
-        //    mExampleDrawable = a.getDrawable(
-        //            R.styleable.GameBoard_exampleDrawable);
-        //    mExampleDrawable.setCallback(this);
-       // }
+        if (a.hasValue(R.styleable.GameBoard_exampleDrawable)) {
+            mExampleDrawable = a.getDrawable(
+                    R.styleable.GameBoard_exampleDrawable);
+            mExampleDrawable.setCallback(this);
+        }
 
-        //a.recycle();
+        a.recycle();
 
         // Set up a default TextPaint object
         mTextPaint = new TextPaint();
@@ -81,20 +96,26 @@ public class GameBoard extends View {
         Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
         mTextHeight = fontMetrics.bottom;
     }
+    @Override
+    public boolean onTouchEvent(MotionEvent motion) {
+        System.out.print(motion.getY()+" "+motion.getX()+" "+motion.getAction());
+        performClick();
+        return true;
+    }
+    public boolean performClick() {
+        super.performClick();
+        return true;
+    }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        this.requestFocus();
 
         // TODO: consider storing these as member variables to reduce
         // allocations per draw cycle.
-        int paddingLeft = getPaddingLeft();
-        int paddingTop = getPaddingTop();
-        int paddingRight = getPaddingRight();
-        int paddingBottom = getPaddingBottom();
 
-        int contentWidth = getWidth() - paddingLeft - paddingRight;
-        int contentHeight = getHeight() - paddingTop - paddingBottom;
+
 
         // Draw the text.
         canvas.drawText(mExampleString,

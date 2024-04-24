@@ -14,6 +14,8 @@ public class CardObject {
     public final EnumRank rank;
     public final EnumSuit suit;
     public final EnumColour colour;
+    public int verticalPos;
+    public int horizontalPos;
     public final int[][] cardFaces =
             {
                     {R.drawable.card_s1,R.drawable.card_s2,R.drawable.card_s3,R.drawable.card_s4,R.drawable.card_s5,R.drawable.card_s6,R.drawable.card_s7,R.drawable.card_s8,R.drawable.card_s9,R.drawable.card_s10,R.drawable.card_s11,R.drawable.card_s12,R.drawable.card_s13},
