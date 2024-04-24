@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        this.setContentView(R.layout.game_view);
+        this.setContentView(R.layout.game_screen);
 
     }
 

@@ -1,4 +1,4 @@
-package com.severinghams.homebrewsolitaire;
+package com.severinghams.homebrewsolitaire.customviews;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -13,9 +13,9 @@ import android.view.View;
 import com.severinghams.homebrewsolitaire.R;
 
 /**
- * Solitaire game board
+ * TODO: document your custom view class.
  */
-public class GameView extends View {
+public class GameBoard extends View {
     private String mExampleString; // TODO: use a default from R.string...
     private int mExampleColor = Color.RED; // TODO: use a default from R.color...
     private float mExampleDimension = 0; // TODO: use a default from R.dimen...
@@ -25,17 +25,17 @@ public class GameView extends View {
     private float mTextWidth;
     private float mTextHeight;
 
-    public GameView(Context context) {
+    public GameBoard(Context context) {
         super(context);
         init(null, 0);
     }
 
-    public GameView(Context context, AttributeSet attrs) {
+    public GameBoard(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs, 0);
     }
 
-    public GameView(Context context, AttributeSet attrs, int defStyle) {
+    public GameBoard(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(attrs, defStyle);
     }
@@ -43,28 +43,26 @@ public class GameView extends View {
     private void init(AttributeSet attrs, int defStyle) {
         // Load attributes
         final TypedArray a = getContext().obtainStyledAttributes(
-                attrs, R.styleable.GameView, defStyle, 0);
+                attrs, R.styleable.GameBoard, defStyle, 0);
 
-        mExampleString = a.getString(
-                R.styleable.GameView_exampleString);
-        System.out.println(a.getString(R.styleable.GameView_exampleString));
-        mExampleColor = a.getColor(
-                R.styleable.GameView_exampleColor,
-                mExampleColor);
+       // mExampleString = a.getString(
+        //        R.styleable.GameBoard_exampleString);
+       // mExampleColor = a.getColor(
+       //         R.styleable.GameBoard_exampleColor,
+        //        mExampleColor);
         // Use getDimensionPixelSize or getDimensionPixelOffset when dealing with
         // values that should fall on pixel boundaries.
-        mExampleDimension = a.getDimension(
-                R.styleable.GameView_exampleDimension,
-                mExampleDimension);
-        System.out.println(mExampleDimension);
+        //mExampleDimension = a.getDimension(
+        //        R.styleable.GameBoard_exampleDimension,
+        //        mExampleDimension);
 
-        if (a.hasValue(R.styleable.GameView_exampleDrawable)) {
-            mExampleDrawable = a.getDrawable(
-                    R.styleable.GameView_exampleDrawable);
-            mExampleDrawable.setCallback(this);
-        }
+        //if (a.hasValue(R.styleable.GameBoard_exampleDrawable)) {
+        //    mExampleDrawable = a.getDrawable(
+        //            R.styleable.GameBoard_exampleDrawable);
+        //    mExampleDrawable.setCallback(this);
+       // }
 
-        a.recycle();
+        //a.recycle();
 
         // Set up a default TextPaint object
         mTextPaint = new TextPaint();
@@ -78,7 +76,6 @@ public class GameView extends View {
     private void invalidateTextPaintAndMeasurements() {
         mTextPaint.setTextSize(mExampleDimension);
         mTextPaint.setColor(mExampleColor);
-        System.out.println(mExampleString);
         mTextWidth = mTextPaint.measureText(mExampleString);
 
         Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
