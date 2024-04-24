@@ -25,7 +25,7 @@ See [Planned Features](https://github.com/SeveringHams/HomebrewSolitaire/blob/ma
 
 ## Attribution
 
-- Undo, Redo, Back, and Hint UI icons created by [Radhe Icon from Flaticon](https://www.flaticon.com/authors/radhe-icon)
+- Undo, Redo, Back, and Hint UI icons created by [Radhe Icon from Flaticon](https://www.flaticon.com/authors/radhe-icon/black-fill?author_id=2709&type=standard)
 
 ## License
 
