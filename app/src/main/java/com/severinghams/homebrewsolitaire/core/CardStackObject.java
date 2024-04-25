@@ -78,6 +78,7 @@ public class CardStackObject {
         this.canStack = true;
         this.singleCardOnly = true;
         this.canRemoveFromStack = true;
+        this.updateStack();
     }
     public CardObject getTopCard() {
         if (cardStackList.isEmpty()) {
