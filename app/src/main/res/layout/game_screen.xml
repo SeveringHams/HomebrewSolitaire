@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#000000">
 
-    <com.severinghams.homebrewsolitaire.customviews.GameBoard
+    <com.severinghams.homebrewsolitaire.GameBoard
         android:id="@+id/game_board"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -20,7 +20,7 @@
         android:paddingBottom="40dp"
         app:exampleColor="#000000"
         app:exampleDrawable="#000000"
-        app:exampleString="Example String"
+        app:exampleString="Homebrew Solitaire"
         app:layout_constraintBottom_toTopOf="@id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

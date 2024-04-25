@@ -1,6 +1,7 @@
-package com.severinghams.homebrewsolitaire.customviews;
+package com.severinghams.homebrewsolitaire;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -9,15 +10,19 @@ import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.View;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+
+import androidx.annotation.NonNull;
 
 import com.severinghams.homebrewsolitaire.R;
+import com.severinghams.homebrewsolitaire.core.BaseSingleDeckGameObject;
 import com.severinghams.homebrewsolitaire.core.KlondikeGameObject;
 
 /**
  * TODO: document your custom view class.
  */
-public class GameBoard extends View {
+public class GameBoard extends SurfaceView implements SurfaceHolder.Callback {
     private String mExampleString; // TODO: use a default from R.string...
     private int mExampleColor = Color.RED; // TODO: use a default from R.color...
     private float mExampleDimension = 0; // TODO: use a default from R.dimen...
@@ -35,30 +40,44 @@ public class GameBoard extends View {
     int contentWidth = getWidth() - paddingLeft - paddingRight;
     int contentHeight = getHeight() - paddingTop - paddingBottom;
 
-    public KlondikeGameObject gameObject;
+    BaseSingleDeckGameObject gameObject;
+    private final MainThread thread;
 
     public GameBoard(Context context) {
         super(context);
-        this.gameObject = new KlondikeGameObject(0);
+        getHolder().addCallback(this);
+        thread = new MainThread(getHolder(), this);
+        setFocusable(true);
         init(null, 0);
+        gameObject = new KlondikeGameObject(0, context);
+    }
+    public void update() {
+
     }
 
     public GameBoard(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.gameObject = new KlondikeGameObject(0);
+        getHolder().addCallback(this);
+        thread = new MainThread(getHolder(), this);
+        setFocusable(true);
         init(attrs, 0);
+        gameObject = new KlondikeGameObject(0, context);
     }
 
     public GameBoard(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        this.gameObject = new KlondikeGameObject(0);
+        getHolder().addCallback(this);
+        thread = new MainThread(getHolder(), this);
+        setFocusable(true);
         init(attrs, defStyle);
+        gameObject = new KlondikeGameObject(0, context);
     }
 
     private void init(AttributeSet attrs, int defStyle) {
         // Load attributes
         final TypedArray a = getContext().obtainStyledAttributes(
-                attrs, R.styleable.GameBoard, defStyle, 0);
+                    attrs, R.styleable.GameBoard, defStyle, 0);
+
 
         mExampleString = a.getString(
                 R.styleable.GameBoard_exampleString);
@@ -86,6 +105,8 @@ public class GameBoard extends View {
 
         // Update TextPaint and text measurements from attributes
         invalidateTextPaintAndMeasurements();
+
+
     }
 
     private void invalidateTextPaintAndMeasurements() {
@@ -110,7 +131,6 @@ public class GameBoard extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        this.requestFocus();
 
         // TODO: consider storing these as member variables to reduce
         // allocations per draw cycle.
@@ -128,7 +148,13 @@ public class GameBoard extends View {
             mExampleDrawable.setBounds(paddingLeft, paddingTop,
                     paddingLeft + contentWidth, paddingTop + contentHeight);
             mExampleDrawable.draw(canvas);
+
+            gameObject.drawGame(canvas);
         }
+    }
+
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
     }
 
     /**
@@ -208,5 +234,30 @@ public class GameBoard extends View {
      */
     public void setExampleDrawable(Drawable exampleDrawable) {
         mExampleDrawable = exampleDrawable;
+    }
+
+    @Override
+    public void surfaceCreated(@NonNull SurfaceHolder holder) {
+        thread.setRunning(true);
+        thread.start();
+    }
+
+    @Override
+    public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) {
+
+    }
+
+    @Override
+    public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
+        boolean retry = true;
+        while (retry) {
+            try {
+                thread.setRunning(false);
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            retry = false;
+        }
     }
 }

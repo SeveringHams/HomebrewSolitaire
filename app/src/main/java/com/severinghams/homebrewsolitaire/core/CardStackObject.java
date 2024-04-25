@@ -1,14 +1,14 @@
 package com.severinghams.homebrewsolitaire.core;
 
 
+import android.graphics.Canvas;
+
 import com.severinghams.homebrewsolitaire.core.enums.EnumRank;
 import com.severinghams.homebrewsolitaire.core.enums.EnumStackType;
 import com.severinghams.homebrewsolitaire.core.enums.EnumStackingRank;
 import com.severinghams.homebrewsolitaire.core.enums.EnumStackingSuit;
-import com.severinghams.homebrewsolitaire.core.enums.EnumSuit;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 
 public class CardStackObject {
@@ -79,7 +79,7 @@ public class CardStackObject {
         this.singleCardOnly = true;
         this.canRemoveFromStack = true;
     }
-    public static CardObject getTopCard() {
+    public CardObject getTopCard() {
         if (cardStackList.isEmpty()) {
             return null;
         }
@@ -174,9 +174,41 @@ public class CardStackObject {
         if (getTopCard()!=null&&canRemoveFromStack) {
             getTopCard().isFaceDown = false;
         }
+        switch (stackType) {
+            case StockStack:
+            case SpreadStackH:
+            case StraightStack:
+                for (int i = 0; i < cardStackList.size(); i++) {
+                    cardStackList.get(i).verticalPos = positionV;
+                    cardStackList.get(i).horizontalPos = positionH;
+                }
+                break;
+            case SpreadStackV:
+                for (int i = 0; i < cardStackList.size(); i++) {
+                    cardStackList.get(i).verticalPos = i;
+                    cardStackList.get(i).horizontalPos = positionH;
+                }
+                break;
+        }
+
+    }
+
+    public void drawStack(Canvas canvas) {
+        switch (stackType) {
+            case StockStack:
+            case SpreadStackH:
+            case StraightStack:
+                this.getTopCard().drawCard(canvas);
+                break;
+            case SpreadStackV:
+                drawStackV(canvas);
+                break;
+        }
+    }
+
+    private void drawStackV(Canvas canvas) {
         for (int i = 0; i < cardStackList.size(); i++) {
-            cardStackList.get(i).verticalPos = i;
-            cardStackList.get(i).horizontalPos = positionH;
+            cardStackList.get(i).drawCard(canvas);
         }
     }
     public static void setIgnoreRules(boolean ignoreRule) {
